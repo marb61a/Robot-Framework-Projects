@@ -1,0 +1,21 @@
+Robot Framework
+    - https://robotframework.org/
+    - Robot Framework is a generic test automation framework for acceptance testing
+        - This allows for business users to test who will not know coding
+    - It has a tabular syntax which uses a keyword-driven testing approach
+        - There are numerous keywords in the framework
+        - For most tasks (Around 90% plus) there is a keyword which avoids coding
+    - The libraries are implemented in Java and Python
+        - Either can be used to write custom keywords
+
+Advantages of Robot Framework
+    - It is free so there are no licensing costs
+    - The syntax is fairly easy to learn
+    - There is fast developement with minimum coding
+    - There is detailed reporting in default reports
+    - There are a lot of libraries available 
+    - It has a distributed structure
+    - Many different types of applications can be automated
+
+Test libraries
+    - There are a lot of libraries packed with keywords
