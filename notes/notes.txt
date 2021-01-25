@@ -1,0 +1,42 @@
+Robot Framework
+    - https://robotframework.org/
+    - Robot Framework is a generic test automation framework for acceptance testing
+        - This allows for business users to test who will not know coding
+    - It has a tabular syntax which uses a keyword-driven testing approach
+        - There are numerous keywords in the framework
+        - For most tasks (Around 90% plus) there is a keyword which avoids coding
+    - The libraries are implemented in Java and Python
+        - Either can be used to write custom keywords
+
+Advantages of Robot Framework
+    - It is free so there are no licensing costs
+    - The syntax is fairly easy to learn
+    - There is fast developement with minimum coding
+    - There is detailed reporting in default reports
+    - There are a lot of libraries available 
+    - It has a distributed structure
+    - Many different types of applications can be automated
+
+Test libraries
+    - There are a lot of libraries packed with keywords
+
+Creating A New Project
+    - In VSCode simply add folder or from the command line using the following command 
+        - mkdir <folder_name>
+        - Adding folders is the same method in the project
+    - When adding Robot files the files must have the .robot extension
+    - Writing test cases directly inside the project is not good practice
+        - Instead have a separate folder for test cases
+    - Robot files are divided into multiple sections
+        - These can be seen in VSCode by typing ***
+        - Other editors may need typing the stars and then CTRL+SPACE
+    - This should bring up 4 different options in a hidden menu
+        - Key Words, Settings, Variables, Test Cases
+        - Settings should always be at the top
+        - Keywords are normally defined in a separate file
+    - The SeleniumLibrary which needs to be imported is installed with Robot 
+        - ChromeDriver will need to be imported and added to the Python scripts folder
+            - 
+        - GeckoDriver is used for Firefox
+            - 
+    -
