@@ -36,7 +36,17 @@ Creating A New Project
         - Keywords are normally defined in a separate file
     - The SeleniumLibrary which needs to be imported is installed with Robot 
         - ChromeDriver will need to be imported and added to the Python scripts folder
-            - 
+            - https://chromedriver.chromium.org/downloads
+            - There is no separate 32 and 64 bit driver
         - GeckoDriver is used for Firefox
-            - 
+            - https://github.com/mozilla/geckodriver/releases
+    - !!! There needs to be at least two spaces between a setting name and the setting value
+
+Writing a Test Case in Robot Framework
+    - Create a new file with .robot extension
+    - To import SeleniumLibrary simply use -> Library  SeleniumLibrary
+    - A variable is defined using the following syntax
+        - ${variable_name}  value an example is as follows
+        - ${Browser}  Chrome
+    - TestCases can be named as anything but may be better if the name make sense
     -
