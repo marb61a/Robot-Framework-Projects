@@ -40,6 +40,7 @@ Creating A New Project
             - There is no separate 32 and 64 bit driver
         - GeckoDriver is used for Firefox
             - https://github.com/mozilla/geckodriver/releases
+        - These drivers are the interface between the browser and test case
     - !!! There needs to be at least two spaces between a setting name and the setting value
 
 Writing a Test Case in Robot Framework
@@ -48,5 +49,23 @@ Writing a Test Case in Robot Framework
     - A variable is defined using the following syntax
         - ${variable_name}  value an example is as follows
         - ${Browser}  Chrome
+        - The value is not a string so no inverted commas
     - TestCases can be named as anything but may be better if the name make sense
-    -
+        - The values in the test case need to be indented
+        - There must always be 2 spaces between variables added
+    - To run the robot file use the following command
+        - robot <file_name>
+        - This can be ran from the project root, path to file must be correct
+        - There are a number of files generated which report on how the test performed
+    - Add comments by using the # symbol
+
+Keyword Suggestions
+    - If there are no suggestions for keywords (Using PyCharm)
+    - The intellibot plugin needs to be installed and one with SeleniumLibrary support added
+    
+Element Locators
+    - Using SeleniumIDE for recording and playback to find elements
+        - https://www.selenium.dev/selenium-ide/
+    - There are alternatives such as Katalon Studio and the browser plugin Katalon Recorder
+        - https://www.katalon.com/
+
