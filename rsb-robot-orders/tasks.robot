@@ -12,32 +12,45 @@ Library    RPA.PDF
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
+    Download the csv file
+
+    # CSV will need to be converted into a table into order to be processed
+    # Robot framework has that facility available - https://robocorp.com/docs/libraries/rpa-framework/rpa-tables/keywords#read-table-from-csv
+    Convert the csv file into a table
+
+    # Everything will have to be done inside a for loop as ordering another robot has the same 
+    # effect as reloading the site so the modal will reappear each time an order is to be entered
     Open the robot order website
     Dismiss modal form
-    Download the csv file
-    Fill in the form using the csv file
-    Create screenshot of each order
-    For each order create a pdf file
-    Create zip file of all pdf receipts
+    # Fill in the form using the csv file
+    # Create screenshot of each order
+    # For each order create a pdf file
+    # Create zip file of all pdf receipts
     [Teardown]    Close the browser
 
 
 *** Keywords ***
+Download the csv file
+    Download    https://robotsparebinindustries.com/orders.csv    overwrite=True
+
+Convert the csv file into a table
+    ${table_file}=    Read table from CSV    orders.csv    overwrite=True 
+
 Open the robot order website
     Open Available Browser    https://robotsparebinindustries.com/#/robot-order
 
 Dismiss modal form
     Click Button    OK
 
-Download the csv file
-    Download    https://robotsparebinindustries.com/orders.csv    overwrite=True
+# Fill in the form using the csv file
+#     # FOR
+#     # END
 
-Fill in the form using the csv file
-    FOR
-    END
+# Create screenshot of each order
 
-Create screenshot of each order
+# For each order create a pdf file
 
-For each order create a pdf file
+# Create zip file of all pdf receipts
 
-Create zip file of all pdf receipts
+Close the browser
+    Close Browser
