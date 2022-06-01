@@ -18,6 +18,11 @@ ${order_url}    https://robotsparebinindustries.com/#/robot-order
 ${modal_ok_btn}    xpath://*[@id="root"]/div/div[2]/div/div/div/div/div/button[1]
 ${form_head}    id:head
 ${body_radio_btn}    body
+${legs_input}    xpath://form/div[3]/input
+${address_input}    id:address
+${preview_btn}    id:preview
+${submit_order_btn}    id:order
+${order_another_btn}    id:order-another
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
@@ -33,7 +38,9 @@ Order robots from RobotSpareBin Industries Inc
     ${orders_table}=    Convert the csv file into a table
     FOR    ${row}    IN    @{orders_table}
         Dismiss modal form
-        Fill in the form using the csv file
+        Fill in the form using the csv file    ${row}
+        Submit the order
+        Order another robot
     END
     # Create screenshot of each order
     # For each order create a pdf file
@@ -68,6 +75,17 @@ Fill in the form using the csv file
     [Arguments]    ${row}
     Select From List By Index    ${form_head}    ${row}[Head]
     Select Radio Button    ${body_radio_btn}    ${row}[Body]
+    Input Text    ${legs_input}    ${row}[Legs]
+    Input Text    ${address_input}    ${row}[Address]
+
+*** Keywords ***
+Submit the order
+    Click Button    ${submit_order_btn}
+
+*** Keywords ***
+Order another robot
+    # Wait Until Element Is Visible    ${order_another_btn}
+    Click Button    ${order_another_btn}
 
 # Create screenshot of each order
 
