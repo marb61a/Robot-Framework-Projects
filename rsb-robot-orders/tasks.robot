@@ -13,7 +13,11 @@ Library    Dialogs
 
 *** Variables ***
 ${order_url}    https://robotsparebinindustries.com/#/robot-order
-${csv_url}
+
+# Form elements
+${modal_ok_btn}    xpath://*[@id="root"]/div/div[2]/div/div/div/div/div/button[1]
+${form_head}    id:head
+${body_radio_btn}    body
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
@@ -26,13 +30,15 @@ Order robots from RobotSpareBin Industries Inc
 
     # Everything will have to be done inside a for loop as ordering another robot has the same 
     # effect as reloading the site so the modal will reappear each time an order is to be entered
-    # Open the robot order website
-    # Dismiss modal form
-    # Fill in the form using the csv file
+    ${orders_table}=    Convert the csv file into a table
+    FOR    ${row}    IN    @{orders_table}
+        Dismiss modal form
+        Fill in the form using the csv file
+    END
     # Create screenshot of each order
     # For each order create a pdf file
     # Create zip file of all pdf receipts
-    [Teardown]    Close the browser
+    # [Teardown]    Close the browser
 
 
 *** Keywords ***
@@ -51,14 +57,17 @@ Ask user to input download url and download csv file
 *** Keywords ***
 Convert the csv file into a table
     ${table_file}=    Read table from CSV    orders.csv    overwrite=True 
+    [Return]    ${table_file}
 
+*** Keywords ***
+Dismiss modal form
+    Click Button    ${modal_ok_btn}
 
-# Dismiss modal form
-#     Click Button    OK
-
-# Fill in the form using the csv file
-    # FOR 
-    # END
+*** Keywords ***
+Fill in the form using the csv file
+    [Arguments]    ${row}
+    Select From List By Index    ${form_head}    ${row}[Head]
+    Select Radio Button    ${body_radio_btn}    ${row}[Body]
 
 # Create screenshot of each order
 
