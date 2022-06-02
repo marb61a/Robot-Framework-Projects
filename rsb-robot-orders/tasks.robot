@@ -23,6 +23,8 @@ ${address_input}    id:address
 ${preview_btn}    id:preview
 ${submit_order_btn}    id:order
 ${order_another_btn}    id:order-another
+${preview_btn}    id:preview
+${robot_preview_image}    id:robot-preview-image
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
@@ -39,13 +41,14 @@ Order robots from RobotSpareBin Industries Inc
     FOR    ${row}    IN    @{orders_table}
         Dismiss modal form
         Fill in the form using the csv file    ${row}
-        Submit the order
+        Wait Until Keyword Succeeds    5x    5s    Preview Robot
+        Wait Until Keyword Succeeds    5x    5s    Submit the order
+        Create screenshot of each robot
         Order another robot
     END
-    # Create screenshot of each order
     # For each order create a pdf file
     # Create zip file of all pdf receipts
-    # [Teardown]    Close the browser
+    [Teardown]    Close the browser
 
 
 *** Keywords ***
@@ -84,10 +87,16 @@ Submit the order
 
 *** Keywords ***
 Order another robot
-    # Wait Until Element Is Visible    ${order_another_btn}
+    Wait Until Element Is Visible    ${order_another_btn}
     Click Button    ${order_another_btn}
 
-# Create screenshot of each order
+*** Keywords ***
+Preview Robot
+    Click Button    ${preview_btn}
+
+*** Keywords ***
+Create screenshot of each robot
+    Capture Element Screenshot    ${robot_preview_image}    ${OUTPUT_DIR}${/}file.png
 
 # For each order create a pdf file
 
