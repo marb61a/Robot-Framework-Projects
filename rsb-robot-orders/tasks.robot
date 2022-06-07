@@ -12,7 +12,9 @@ Library    RPA.Dialogs
 Library    Dialogs
 
 *** Variables ***
+# Order related
 ${order_url}    https://robotsparebinindustries.com/#/robot-order
+${order_number}
 
 # Form elements
 ${modal_ok_btn}    xpath://*[@id="root"]/div/div[2]/div/div/div/div/div/button[1]
@@ -41,9 +43,11 @@ Order robots from RobotSpareBin Industries Inc
     FOR    ${row}    IN    @{orders_table}
         Dismiss modal form
         Fill in the form using the csv file    ${row}
-        Wait Until Keyword Succeeds    5x    5s    Preview Robot
-        Wait Until Keyword Succeeds    5x    5s    Submit the order
-        Create screenshot of each robot
+        # Wait until keyword succeeds needs 3 parameters, how many times to retry, how long to wait
+        # and the keyword to wait for
+        Wait Until Keyword Succeeds    5x    10s    Preview Robot
+        Wait Until Keyword Succeeds    5x    10s    Submit the order
+        Create screenshot of each robot    ${row}[Order number]
         Order another robot
     END
     # For each order create a pdf file
@@ -80,6 +84,7 @@ Fill in the form using the csv file
     Select Radio Button    ${body_radio_btn}    ${row}[Body]
     Input Text    ${legs_input}    ${row}[Legs]
     Input Text    ${address_input}    ${row}[Address]
+    Sleep    1s
 
 *** Keywords ***
 Submit the order
@@ -96,9 +101,11 @@ Preview Robot
 
 *** Keywords ***
 Create screenshot of each robot
-    Capture Element Screenshot    ${robot_preview_image}    ${OUTPUT_DIR}${/}file.png
+    [Arguments]    ${order_number}
+    Capture Element Screenshot    ${robot_preview_image}    ${CURDIR}${/}output${/}${order_number}file.png
+    [Return]       ${CURDIR}${/}output${/}${order_number}.png
 
-# For each order create a pdf file
+# For each order create a pdf file (receipt)
 
 # Create zip file of all pdf receipts
 
