@@ -42,17 +42,17 @@ Order robots from RobotSpareBin Industries Inc
     ${orders_table}=    Convert the csv file into a table
     FOR    ${row}    IN    @{orders_table}
         Dismiss modal form
-        Fill in the form using the csv file    ${row}
+        Wait Until Keyword Succeeds    5x    5s    Fill in the form using the csv file    ${row}
         # Wait until keyword succeeds needs 3 parameters, how many times to retry, how long to wait
         # and the keyword to wait for
-        Wait Until Keyword Succeeds    5x    10s    Preview Robot
-        Wait Until Keyword Succeeds    5x    10s    Submit the order
-        Create screenshot of each robot    ${row}[Order number]
-        Order another robot
+        Wait Until Keyword Succeeds    5x    1s    Preview Robot
+        Wait Until Keyword Succeeds    5x    1s    Submit the order
+        Wait Until Keyword Succeeds    5x    1s    Create screenshot of each robot    ${row}[Order number]
+        Wait Until Keyword Succeeds    5x    1s    Order another robot
     END
     # For each order create a pdf file
     # Create zip file of all pdf receipts
-    [Teardown]    Close the browser
+    # [Teardown]    Close the browser
 
 
 *** Keywords ***
@@ -84,7 +84,11 @@ Fill in the form using the csv file
     Select Radio Button    ${body_radio_btn}    ${row}[Body]
     Input Text    ${legs_input}    ${row}[Legs]
     Input Text    ${address_input}    ${row}[Address]
-    Sleep    1s
+
+*** Keywords ***
+Preview Robot
+    Click Button    ${preview_btn}
+    Sleep    3s
 
 *** Keywords ***
 Submit the order
@@ -94,10 +98,6 @@ Submit the order
 Order another robot
     Wait Until Element Is Visible    ${order_another_btn}
     Click Button    ${order_another_btn}
-
-*** Keywords ***
-Preview Robot
-    Click Button    ${preview_btn}
 
 *** Keywords ***
 Create screenshot of each robot
