@@ -10,6 +10,7 @@ Library    RPA.Tables
 Library    RPA.PDF
 Library    RPA.Dialogs
 Library    Dialogs
+Library    RPA.RobotLogListener
 
 *** Variables ***
 # Order related
@@ -27,6 +28,12 @@ ${submit_order_btn}    id:order
 ${order_another_btn}    id:order-another
 ${preview_btn}    id:preview
 ${robot_preview_image}    id:robot-preview-image
+${order_recipt}    id:order-completion
+
+# Output folders
+${img_folder}     ${CURDIR}${/}image_files
+${pdf_folder}     ${CURDIR}${/}pdf_files
+${output_folder}  ${CURDIR}${/}output
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
@@ -45,10 +52,11 @@ Order robots from RobotSpareBin Industries Inc
         Wait Until Keyword Succeeds    5x    5s    Fill in the form using the csv file    ${row}
         # Wait until keyword succeeds needs 3 parameters, how many times to retry, how long to wait
         # and the keyword to wait for
-        Wait Until Keyword Succeeds    5x    1s    Preview Robot
-        Wait Until Keyword Succeeds    5x    1s    Submit the order
-        Wait Until Keyword Succeeds    5x    1s    Create screenshot of each robot    ${row}[Order number]
-        Wait Until Keyword Succeeds    5x    1s    Order another robot
+        Preview Robot
+        Sleep    2s
+        Submit the order
+        Create screenshot of each robot    ${row}[Order number]
+        Run Keyword And Continue On Failure    Order another robot
     END
     # For each order create a pdf file
     # Create zip file of all pdf receipts
@@ -64,8 +72,7 @@ Open Browser
 # https://robotframework.org/robotframework/latest/libraries/Dialogs.html
 Ask user to input download url and download csv file
 #    https://robotsparebinindustries.com/orders.csv 
-    ${csv_url}=    Get Value From User    CSV file url:
-    # Click Button    OK
+    ${csv_url}=    Get Value From User    Enter CSV file address:
     Download    ${csv_url}   overwrite=True
 
 *** Keywords ***
@@ -88,15 +95,17 @@ Fill in the form using the csv file
 *** Keywords ***
 Preview Robot
     Click Button    ${preview_btn}
-    Sleep    3s
+    Sleep    1s
 
 *** Keywords ***
 Submit the order
+    Scroll Element Into View    ${submit_order_btn}
     Click Button    ${submit_order_btn}
+    # Mute Run On Failure    Element Should Be Visible
 
 *** Keywords ***
 Order another robot
-    Wait Until Element Is Visible    ${order_another_btn}
+    Wait Until Page Contains Element    ${order_another_btn}
     Click Button    ${order_another_btn}
 
 *** Keywords ***
